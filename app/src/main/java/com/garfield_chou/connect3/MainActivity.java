@@ -3,6 +3,7 @@ package com.garfield_chou.connect3;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
                 layout.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    public void playAgain(View view) {
+        LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
+        layout.setVisibility(View.INVISIBLE);
+
+        activePlayer = 0;
+        for (int i = 0; i < gameState.length; i++) {
+            gameState[i] = 2;
+        }
+
+        GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            ((ImageView)gridLayout.getChildAt(i)).setImageResource(0);
+        }
+
     }
 
     @Override
