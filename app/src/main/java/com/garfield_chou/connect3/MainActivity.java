@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     // 0 = yellow, 1 = red
     int activePlayer = 0;
 
+    boolean gameIsActive = true;
+
     // 2 means unplayed
     int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
     int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
 
-        if (2 == gameState[tappedCounter]) {
+        if (2 == gameState[tappedCounter] && gameIsActive) {
 
             gameState[tappedCounter] = activePlayer;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     gameState[winningPosition[0]] != 2 ) {
 
                 // Someone has won
+                gameIsActive = false;
                 String winner = "Red";
                 if (0 == gameState[winningPosition[0]]) {
                     winner = "Yellow";
@@ -52,11 +55,24 @@ public class MainActivity extends AppCompatActivity {
 
                 LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
                 layout.setVisibility(View.VISIBLE);
+            } else {
+                boolean gameIsOver = true;
+                for (int counterState : gameState) {
+                    if (2 == counterState) gameIsOver = false;
+                }
+                if (gameIsOver) {
+                    TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
+                    winnerMessage.setText("It's a draw");
+
+                    LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
+                    layout.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
 
     public void playAgain(View view) {
+        gameIsActive = true;
         LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
         layout.setVisibility(View.INVISIBLE);
 
