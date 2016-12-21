@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
     // 0 = yellow, 1 = red
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                     gameState[winningPosition[1]] == gameState[winningPosition[2]] &&
                     gameState[winningPosition[0]] != 2 ) {
                 System.out.println(gameState[winningPosition[0]]);
+
+                // Someone has won
+                LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
+                layout.setVisibility(View.VISIBLE);
             }
         }
     }
