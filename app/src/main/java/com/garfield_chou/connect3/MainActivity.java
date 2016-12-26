@@ -2,6 +2,7 @@ package com.garfield_chou.connect3;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public void dropIn (View view) {
         ImageView counter = (ImageView) view;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
+        String winner = "Red";
+        boolean gameIsOver = false;
 
         if (2 == gameState[tappedCounter] && gameIsActive) {
 
@@ -45,21 +48,23 @@ public class MainActivity extends AppCompatActivity {
 
                 // Someone has won
                 gameIsActive = false;
-                String winner = "Red";
+
                 if (0 == gameState[winningPosition[0]]) {
                     winner = "Yellow";
                 }
-
+                /*
                 TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
                 winnerMessage.setText(winner + " has won!");
 
                 LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
                 layout.setVisibility(View.VISIBLE);
+                */
             } else {
-                boolean gameIsOver = true;
+                gameIsOver = true;
                 for (int counterState : gameState) {
                     if (2 == counterState) gameIsOver = false;
                 }
+                /*
                 if (gameIsOver) {
                     TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
                     winnerMessage.setText("It's a draw");
@@ -67,8 +72,23 @@ public class MainActivity extends AppCompatActivity {
                     LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
                     layout.setVisibility(View.VISIBLE);
                 }
+                */
             }
         }
+        Log.i("winner is ", winner);
+        if (gameIsOver || !gameIsActive) {
+            TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
+            if(!gameIsActive){
+                winnerMessage.setText(winner + " has won!");                
+            } else {
+                winnerMessage.setText("It's a draw");
+            }
+            LinearLayout layout = (LinearLayout)findViewById(R.id.playAgainLayout);
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            Log.i("Debug", "Neither over nor active");
+        }
+
     }
 
     public void playAgain(View view) {
